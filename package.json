@@ -1,0 +1,44 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.9.2",
+    "roboto-fontface": "*",
+    "vee-validate": "^4.4.7",
+    "vue-axios": "^3.2.4",
+    "vue-router": "^3.5.1",
+    "vuelidate": "^0.7.6",
+    "vuetify": "^2.5.5"
+  },
+  "devDependencies": {
+    "@mdi/font": "^5.9.55",
+    "axios": "^0.21",
+    "bootstrap": "^5.0.2",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "deepmerge": "^4.2.2",
+    "fibers": "^5.0.0",
+    "jquery": "^3.6",
+    "laravel-mix": "^6.0.25",
+    "lodash": "^4.17.19",
+    "material-design-icons-iconfont": "^6.1.0",
+    "popper.js": "^1.16.1",
+    "postcss": "^8.1.14",
+    "resolve-url-loader": "^3.1.2",
+    "sass": "~1.32.6",
+    "sass-loader": "^11.1.1",
+    "vue": "^2.6.12",
+    "vue-cli-plugin-vuetify": "~2.4.1",
+    "vue-loader": "^15.9.7",
+    "vue-loader-v16": "^16.0.0-beta.5.4",
+    "vue-template-compiler": "^2.6.12",
+    "vuetify-loader": "^1.7.2"
+  }
+}

@@ -47,13 +47,12 @@ class PadreController extends Controller
     public function show($id)
     {
         // Buscamos un padre por el id.
-
         $padre = Padre::find($id);
         $alumnos = $padre->alumnos()->where('padres_id', '=', $id)->get();
         $pagos = $padre->pagos()->where('padres_id', '=', $id)->get();
 
 
-        // Si no existe ese fabricante devolvemos un error.
+        // Si no existe padre devolvemos un error.
         if (!$padre) {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
             // En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
@@ -100,7 +99,46 @@ class PadreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $padre = Padre::find($request->padre_id);
+
+        // Si no existe padre devolvemos un error.
+        if (!$padre) {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+            // En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+            return response()->json(
+                [
+                    'errors' => array([
+                        'code' => 404,
+                        'message' => 'No se encuentra un padre con ese código.'
+                    ]),
+                    'id' => $id,
+                ],
+                404
+            );
+        }
+
+
+        $padre->name = $request->name;
+        $padre->surname = $request->apellido;
+        $padre->name_ar = $request->name_ar;
+        $padre->surname_ar = $request->apellido_ar;
+        $padre->dni = $request->DNI;
+        $padre->telefono = $request->telefono;
+        $padre->email = $request->email;
+        $padre->address = $request->direccion;
+        $padre->city = $request->city;
+        $padre->postalcode = $request->postalcode;
+        $padre->Matricula = $request->Matricula;
+        $padre->Descuento = $request->Descuento;
+
+        $padre->update();
+
+        return response()->json(
+            [
+                'status' => 'ok',
+            ],
+            200
+        );
     }
 
     /**

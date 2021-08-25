@@ -36,32 +36,54 @@
             </v-data-table>
         </v-card>
 
-        <v-dialog v-model="dialog" max-width="500px">
+        <v-dialog v-model="dialog" max-width="800px">
             <v-card>
                 <v-card-title>
-                    <span class="text-h5"> Editar datos padre </span>
+                    <span class="text-h5"> Editar datos Padre/Madre </span>
                 </v-card-title>
 
                 <v-card-text>
                     <v-container>
                         <v-row>
-                            <v-col cols="12" sm="6" md="4">
+                            <v-col cols="12" md="6">
                                 <v-text-field
-                                    label="Dessert name"
+                                    id="name"
+                                    name="name"
+                                    placeholder="Nombre"
+                                    label="Nombre Padre/Madre"
+                                    v-model="editedItem.name"
                                 ></v-text-field>
                             </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Calories"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Fat (g)"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Carbs (g)"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" sm="6" md="4">
+
+                            <v-col cols="12" md="6">
                                 <v-text-field
-                                    label="Protein (g)"
+                                    id="apellido"
+                                    name="apellido"
+                                    placeholder="Apellido"
+                                    label="Apellido Padre/Madre"
+                                    v-model="editedItem.surname"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+
+                        <v-row>
+                            <v-col cols="12" md="6">
+                                <v-text-field
+                                    id="name_ar"
+                                    name="name_ar"
+                                    placeholder="اسم"
+                                    label="اسم الأب"
+                                    v-model="editedItem.name_ar"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="6">
+                                <v-text-field
+                                    id="apellido_ar"
+                                    name="apellido_ar"
+                                    placeholder="لقب"
+                                    label="لقب الأب"
+                                    v-model="editedItem.surname_ar"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -92,6 +114,13 @@ export default {
             dialog: false,
             search: "",
             padres: [],
+            editedIndex: -1,
+            editedItem: {
+                name: "",
+                surname: "",
+                name_ar: "",
+                surname_ar: ""
+            },
             headers: [
                 { text: "Id", value: "id" },
                 { text: "Nombre", value: "name" },
@@ -114,17 +143,14 @@ export default {
             console.log("HOLA");
         },
         editItem(item) {
-            //this.editedIndex = this.desserts.indexOf(item);
-            // this.editedItem = Object.assign({}, item);
+            this.editedIndex = this.padres.indexOf(item);
+            this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {
-            //this.editedIndex = this.desserts.indexOf(item);
-            //this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
         deleteItemConfirm() {
-            //this.desserts.splice(this.editedIndex, 1);
             this.closeDelete();
         },
         close() {

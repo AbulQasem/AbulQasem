@@ -87,6 +87,38 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col cols="12" md="4">
+                                <v-text-field
+                                    id="email"
+                                    name="email"
+                                    placeholder="Correo"
+                                    label="E-mail"
+                                    v-model="editedItem.email"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="4">
+                                <v-text-field
+                                    id="dni"
+                                    name="dni"
+                                    placeholder="DNI"
+                                    label="DNI"
+                                    v-model="editedItem.dni"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="4">
+                                <v-text-field
+                                    id="phone"
+                                    name="telefono"
+                                    placeholder="Telefono"
+                                    label="Telefono"
+                                    v-model="editedItem.telefono"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
                     </v-container>
                 </v-card-text>
 
@@ -115,12 +147,7 @@ export default {
             search: "",
             padres: [],
             editedIndex: -1,
-            editedItem: {
-                name: "",
-                surname: "",
-                name_ar: "",
-                surname_ar: ""
-            },
+            editedItem: {},
             headers: [
                 { text: "Id", value: "id" },
                 { text: "Nombre", value: "name" },
@@ -160,8 +187,31 @@ export default {
             this.dialogDelete = false;
         },
         save() {
+            this.submitForm();
             this.close();
+        },
+        submitForm() {
+            // this.$v.$touch();
+
+            // if (this.$v.$invalid) {
+            //     this.$v.$touch();
+            // } else {
+            console.log("api/padres/" + this.editedItem.id);
+            axios
+                .put("api/padres/" + this.editedItem.id, this.editedItem)
+                .then(response => {
+                    if (response.status === 200) {
+                        // this.$router.push({ path: "/" });
+                    }
+                })
+                .catch(error => {
+                    console.log(this.$data);
+                })
+                .finally(() => {
+                    //Perform action in always
+                });
         }
+        // }
     },
     created() {
         this.getPadres();

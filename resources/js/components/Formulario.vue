@@ -88,7 +88,7 @@
 
                     <v-col cols="12" md="4">
                         <v-text-field
-                            id="DNI"
+                            id="phone"
                             type="text"
                             name="telefono"
                             autocomplete="telefono"

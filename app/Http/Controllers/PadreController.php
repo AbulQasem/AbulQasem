@@ -99,7 +99,7 @@ class PadreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $padre = Padre::find($request->padre_id);
+        $padre = Padre::find($id);
 
         // Si no existe padre devolvemos un error.
         if (!$padre) {
@@ -117,12 +117,11 @@ class PadreController extends Controller
             );
         }
 
-
         $padre->name = $request->name;
-        $padre->surname = $request->apellido;
+        $padre->surname = $request->surname;
         $padre->name_ar = $request->name_ar;
-        $padre->surname_ar = $request->apellido_ar;
-        $padre->dni = $request->DNI;
+        $padre->surname_ar = $request->surname_ar;
+        $padre->dni = $request->dni;
         $padre->telefono = $request->telefono;
         $padre->email = $request->email;
         $padre->address = $request->direccion;
@@ -135,7 +134,7 @@ class PadreController extends Controller
 
         return response()->json(
             [
-                'status' => 'ok',
+                'status' => 'updated ok',
             ],
             200
         );

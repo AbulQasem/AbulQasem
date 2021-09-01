@@ -124,12 +124,11 @@ class PadreController extends Controller
         $padre->dni = $request->dni;
         $padre->telefono = $request->telefono;
         $padre->email = $request->email;
-        $padre->address = $request->direccion;
+        $padre->address = $request->address;
         $padre->city = $request->city;
         $padre->postalcode = $request->postalcode;
         $padre->Matricula = $request->Matricula;
         $padre->Descuento = $request->Descuento;
-
         $padre->update();
 
         return response()->json(
@@ -148,6 +147,26 @@ class PadreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $padre = Padre::find($id);
+
+        // Si no existe devolvemos un error.
+        if (!$padre) {
+            return response()->json(['errors' => array(['code' => 404, 'message' => 'No se encuentra padre.'])], 404);
+        }
+
+        // Find asociated 
+        $alumnos = $padre->alumnos;
+
+        if (sizeof($alumnos) > 0) {
+            // foreach($alumnos as $alumno) {
+            //     $alumno->delete();
+            // }        
+            return response()->json(['code' => 409, 'message' => 'No se puede eliminar'], 409);
+        }
+
+        // Procedemos por lo tanto a eliminar.
+        $padre->delete();
+
+        return response()->json(['code' => 204, 'message' => 'Se ha eliminado correctamente.'], 204);
     }
 }

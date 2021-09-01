@@ -11,4 +11,15 @@ class Pago extends Model
 
     protected $table = 'pagos';
 
+
+
+    public function padre()
+    {
+        return $this->belongsTo('App\Padre', 'padres_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id');
+    }
 }

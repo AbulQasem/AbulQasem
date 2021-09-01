@@ -29,6 +29,11 @@
                     <v-icon small class="mr-2" @click="editItem(item)">
                         mdi-pencil
                     </v-icon>
+
+                    <v-icon small @click="goToFile(item)">
+                        mdi-eye
+                    </v-icon>
+
                     <v-icon small @click="deleteItem(item)">
                         mdi-delete
                     </v-icon>
@@ -119,6 +124,18 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col cols="12" md="12">
+                                <v-text-field
+                                    id="address"
+                                    name="address"
+                                    placeholder="address"
+                                    label="address"
+                                    v-model="editedItem.address"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
                     </v-container>
                 </v-card-text>
 
@@ -133,6 +150,24 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <v-dialog v-model="dialogDelete" max-width="500px">
+            <v-card>
+                <v-card-title class="text-h5"
+                    >Are you sure you want to delete this item?</v-card-title
+                >
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="closeDelete"
+                        >Cancel</v-btn
+                    >
+                    <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                        >OK</v-btn
+                    >
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -144,6 +179,8 @@ export default {
     data() {
         return {
             dialog: false,
+            dialogDelete: false,
+
             search: "",
             padres: [],
             editedIndex: -1,
@@ -155,6 +192,7 @@ export default {
                 { text: "الإسم", value: "name_ar" },
                 { text: "اللقب", value: "surname_ar" },
                 { text: "Telefono", value: "telefono" },
+                { text: "E-mail", value: "email" },
                 { text: "Matricula", value: "Matricula" },
                 { text: "Actions", value: "actions", sortable: false }
             ]
@@ -175,9 +213,27 @@ export default {
             this.dialog = true;
         },
         deleteItem(item) {
+            this.editedIndex = this.padres.indexOf(item);
+            this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
+        goToFile(item) {
+            this.$router.push("/padre/" + item.id);
+        },
         deleteItemConfirm() {
+            axios
+                .delete("api/padres/" + this.editedItem.id)
+                .then(response => {
+                    if (response.status === 200) {
+                        this.getPadres();
+                    }
+                })
+                .catch(error => {
+                    console.log("ERROR");
+                })
+                .finally(() => {
+                    //Perform action in always
+                });
             this.closeDelete();
         },
         close() {
@@ -196,12 +252,13 @@ export default {
             // if (this.$v.$invalid) {
             //     this.$v.$touch();
             // } else {
+            console.log(this.editedItem);
             console.log("api/padres/" + this.editedItem.id);
             axios
                 .put("api/padres/" + this.editedItem.id, this.editedItem)
                 .then(response => {
                     if (response.status === 200) {
-                        // this.$router.push({ path: "/" });
+                        this.getPadres();
                     }
                 })
                 .catch(error => {

@@ -180,7 +180,6 @@ export default {
         return {
             dialog: false,
             dialogDelete: false,
-
             search: "",
             padres: [],
             editedIndex: -1,

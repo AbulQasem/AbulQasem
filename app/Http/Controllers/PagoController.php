@@ -87,6 +87,17 @@ class PagoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pago = Pago::find($id);
+
+        // Si no existe devolvemos un error.
+        if (!$pago) {
+            return response()->json(['errors' => array(['code' => 404, 'message' => 'No se encuentra el pago.'])], 404);
+        }
+
+        
+        // Procedemos por lo tanto a eliminar.
+        $pago->delete();
+
+        return response()->json(['code' => 204, 'message' => 'Se ha eliminado correctamente.'], 204);
     }
 }

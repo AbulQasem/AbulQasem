@@ -16,6 +16,8 @@ import Alumno from './components/Alumno.vue'
 import Profesor from './components/Profesor.vue'
 import Grupo from './components/Grupo.vue'
 
+import ProfilePDF from './components/ProfilePDF.vue'
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -63,6 +65,11 @@ const router = new VueRouter({
         {
             path: "/grupo/:id",
             component: Grupo
+
+        },
+        {
+            path: "/profile2PDF/:id",
+            component: ProfilePDF
 
         }
 

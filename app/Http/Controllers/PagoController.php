@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pago;
+use Illuminate\Support\Facades\DB;
 
 class PagoController extends Controller
 {
@@ -14,7 +15,12 @@ class PagoController extends Controller
      */
     public function index()
     {
-        return response()->json(['status' => 'ok', 'data' => Pago::all()], 200);
+        $pagos = DB::table('pagos')
+            ->leftJoin('padres', 'padres.id', "=", "pagos.padres_id")
+            ->select('pagos.*', 'padres.name', 'padres.surname')
+            ->get();
+
+        return response()->json(['status' => 'ok', 'data' => $pagos], 200);
     }
 
     /**
@@ -76,7 +82,33 @@ class PagoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $pago = Pago::find($id);
+
+        // Si no existe padre devolvemos un error.
+        if (!$pago) {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+            // En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+            return response()->json(
+                [
+                    'errors' => array([
+                        'code' => 404,
+                        'message' => 'No se encuentra un padre con ese código.'
+                    ]),
+                    'id' => $id,
+                ],
+                404
+            );
+        }
+
+        $pago->cantidad = $request->cantidad;
+        $pago->update();
+
+        return response()->json(
+            [
+                'status' => 'updated ok',
+            ],
+            200
+        );
     }
 
     /**
@@ -94,7 +126,7 @@ class PagoController extends Controller
             return response()->json(['errors' => array(['code' => 404, 'message' => 'No se encuentra el pago.'])], 404);
         }
 
-        
+
         // Procedemos por lo tanto a eliminar.
         $pago->delete();
 

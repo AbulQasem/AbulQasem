@@ -198,7 +198,6 @@
                             </v-list>
                         </v-card-text>
                     </v-card>
-
                     <v-container ml-16>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -219,7 +218,6 @@
                         >
                             Imprimir
                         </v-btn>
-
                     </v-container>
                 </v-tab-item>
             </v-tabs>
@@ -261,10 +259,11 @@
 
 <script>
 import NavBar from "./NavBar.vue";
+import VueHtml2pdf from "vue-html2pdf";
 
 export default {
     name: "padre",
-    components: { NavBar },
+    components: { NavBar, VueHtml2pdf },
     props: ["padre_id"],
 
     data() {
@@ -275,9 +274,9 @@ export default {
             hijos: [],
             pagos: [],
             nuevoPago: {
-                "padre_id": "",
-                "user_id": "",
-                "cantidad": "",
+                padre_id: "",
+                user_id: "",
+                cantidad: ""
             }
         };
     },
@@ -296,7 +295,6 @@ export default {
             this.dialog = false;
         },
         savePay() {
-
             this.nuevoPago.padre_id = this.$route.params.id;
             // TODO: usuarios que registran el pago
             this.nuevoPago.user_id = 1;
@@ -311,14 +309,13 @@ export default {
                         this.closeNewPayment();
                     }
                 })
-                .catch(error => {
-                })
+                .catch(error => {})
                 .finally(() => {
                     //Perform action in always
                 });
-        }, 
+        },
         print() {
-
+            this.$router.push("/profile2PDF/" + this.padre.id);
         }
     },
     created() {

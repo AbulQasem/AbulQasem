@@ -203,9 +203,7 @@ export default {
                 this.padres = response.data.data;
             });
         },
-        handleFunction() {
-            console.log("HOLA");
-        },
+        handleFunction() {},
         editItem(item) {
             this.editedIndex = this.padres.indexOf(item);
             this.editedItem = Object.assign({}, item);
@@ -246,13 +244,6 @@ export default {
             this.close();
         },
         submitForm() {
-            // this.$v.$touch();
-
-            // if (this.$v.$invalid) {
-            //     this.$v.$touch();
-            // } else {
-            console.log(this.editedItem);
-            console.log("api/padres/" + this.editedItem.id);
             axios
                 .put("api/padres/" + this.editedItem.id, this.editedItem)
                 .then(response => {
@@ -263,11 +254,8 @@ export default {
                 .catch(error => {
                     console.log(this.$data);
                 })
-                .finally(() => {
-                    //Perform action in always
-                });
+                .finally(() => {});
         }
-        // }
     },
     created() {
         this.getPadres();

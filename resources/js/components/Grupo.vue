@@ -52,14 +52,11 @@ export default {
     },
     methods: {
         getAlumnosGrupo() {
-            console.log("/api/grupos/" + this.$route.params.id);
             axios.get("/api/grupos/" + this.$route.params.id).then(response => {
 
                 this.alumnos = response.data.alumnos;
                 this.profesor = response.data.profesor[0];
                 this.grupo = response.data.grupo;
-
-                console.log(this.profesor);
             });
         }
     },

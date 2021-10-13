@@ -169,6 +169,7 @@
                                         }}</v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
+                                <v-divider></v-divider>
                             </v-list>
                         </v-card-text>
                     </v-card>
@@ -178,28 +179,28 @@
                     <v-card flat>
                         <v-card-text>
                             <v-list v-for="(pago, index) in pagos" :key="index">
-                                <!-- PAGO -->
                                 <v-list-item>
                                     <v-list-item-icon>
                                         <v-icon color="indigo">
-                                            mdi-money
+                                            mdi-check
                                         </v-icon>
                                     </v-list-item-icon>
 
                                     <v-list-item-content>
-                                        <v-list-item-title>
-                                            {{ "Fecha:   " + pago.created_at }}
-                                        </v-list-item-title>
-                                        <v-list-item-subtitle>{{
-                                            pago.cantidad
-                                        }}</v-list-item-subtitle>
+                                        {{
+                                            "Fecha:   " +
+                                                dateFormat(pago.created_at)
+                                        }}
+                                    </v-list-item-content>
+                                    <v-list-item-content>
+                                        {{ "Cantidad:   " + pago.cantidad }}
                                     </v-list-item-content>
                                 </v-list-item>
+                                <v-divider></v-divider>
                             </v-list>
                         </v-card-text>
                     </v-card>
                     <v-container ml-16>
-                        <v-spacer></v-spacer>
                         <v-btn
                             color="warning"
                             x-large
@@ -214,7 +215,7 @@
                             x-large
                             dark
                             type="submit"
-                            @click="print()"
+                            @click="printPDF()"
                         >
                             Imprimir
                         </v-btn>
@@ -254,21 +255,29 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+        <profile-pdf
+            v-bind:print="print"
+            v-bind:padre="padre"
+            v-bind:hijos="hijos"
+            v-bind:pagos="pagos"
+            v-on:printed="print = false"
+        ></profile-pdf>
     </div>
 </template>
 
 <script>
 import NavBar from "./NavBar.vue";
-import VueHtml2pdf from "vue-html2pdf";
+import ProfilePdf from "./ProfilePDF.vue";
 
 export default {
     name: "padre",
-    components: { NavBar, VueHtml2pdf },
+    components: { NavBar, ProfilePdf },
     props: ["padre_id"],
-
     data() {
         return {
             dialog: false,
+            print: false,
             tab: null,
             padre: {},
             hijos: [],
@@ -299,8 +308,6 @@ export default {
             // TODO: usuarios que registran el pago
             this.nuevoPago.user_id = 1;
 
-            console.log(this.nuevoPago);
-
             axios
                 .post("api/pagos", this.nuevoPago)
                 .then(response => {
@@ -314,8 +321,20 @@ export default {
                     //Perform action in always
                 });
         },
-        print() {
-            this.$router.push("/profile2PDF/" + this.padre.id);
+        printPDF() {
+            console.log("Boton pulsado");
+            this.print = true;
+        },
+        dateFormat(isoDate) {
+            const date = new Date(isoDate);
+
+            return (
+                date.getDate() +
+                "-" +
+                (date.getMonth() + 1) +
+                "-" +
+                date.getFullYear()
+            );
         }
     },
     created() {

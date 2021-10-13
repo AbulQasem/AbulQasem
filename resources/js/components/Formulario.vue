@@ -342,7 +342,6 @@ export default {
             if (this.$v.$invalid) {
                 this.$v.$touch();
             } else {
-                console.log("HOLA");
                 axios
                     .post("api/matricula", this.$data)
                     .then(response => {

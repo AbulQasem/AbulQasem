@@ -72,20 +72,22 @@
         <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
                 <v-card-title class="text-h5"
-                    >Are you sure you want to delete this item?</v-card-title
+                    >Estas seguro que quieres borrar este pago?</v-card-title
                 >
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete"
-                        >Cancel</v-btn
+                        >Cancelar</v-btn
                     >
                     <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                        >OK</v-btn
+                        >Aceptar</v-btn
                     >
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
         </v-dialog>
+
+
     </div>
 </template>
 
@@ -155,13 +157,6 @@ export default {
             this.close();
         },
         submitForm() {
-            // this.$v.$touch();
-
-            // if (this.$v.$invalid) {
-            //     this.$v.$touch();
-            // } else {
-            console.log(this.editedItem);
-            console.log("api/padres/" + this.editedItem.id);
             axios
                 .put("api/pagos/" + this.editedItem.id, this.editedItem)
                 .then(response => {

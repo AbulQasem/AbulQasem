@@ -51,11 +51,10 @@
             >
         </v-card>
 
-        <!-- Para editar un grupo -->
         <v-dialog v-model="dialog" max-width="800px">
             <v-card>
                 <v-card-title>
-                    <span class="text-h5"> Editar datos del profesor </span>
+                    <span class="text-h5"> Editar datos del Grupo</span>
                 </v-card-title>
 
                 <v-card-text>

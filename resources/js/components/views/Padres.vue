@@ -18,10 +18,10 @@
             <v-data-table
                 dense
                 :headers="headers"
-                :items="padres"
-                :items-per-page="15"
+                :items="data.padres"
+                :items-per-page="25"
                 item-key="id"
-                class="elevation-1"
+                class="elevation-1 arabic-text"
                 :search="search"
                 @row-click="handleFunction"
             >
@@ -37,6 +37,12 @@
                     <v-icon small @click="deleteItem(item)">
                         mdi-delete
                     </v-icon>
+                </template>
+
+                <template v-slot:item.pagado="{ item }">
+                    <v-chip :color="getColor(item)" dark>
+                        {{ item.pagado }}
+                    </v-chip>
                 </template>
             </v-data-table>
         </v-card>
@@ -79,6 +85,7 @@
                                     placeholder="اسم"
                                     label="اسم الأب"
                                     v-model="editedItem.name_ar"
+                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
 
@@ -89,6 +96,7 @@
                                     placeholder="لقب"
                                     label="لقب الأب"
                                     v-model="editedItem.surname_ar"
+                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -181,7 +189,10 @@ export default {
             dialog: false,
             dialogDelete: false,
             search: "",
-            padres: [],
+            data: {
+                padres: [],
+                pagos: []
+            },
             editedIndex: -1,
             editedItem: {},
             headers: [
@@ -193,24 +204,34 @@ export default {
                 { text: "Telefono", value: "telefono" },
                 { text: "E-mail", value: "email" },
                 { text: "Matricula", value: "Matricula" },
+                { text: "Descuento", value: "Descuento" },
+                { text: "Pagado", value: "pagado" },
                 { text: "Actions", value: "actions", sortable: false }
             ]
         };
     },
     methods: {
+        getColor(item) {
+            const percent = (item.pagado / item.Matricula) * 100;
+            console.log(percent);
+
+            if (percent < 30) return "red";
+            else if ((percent < 80) && (percent >= 30)) return "orange";
+            else return "green";
+        },
         getPadres() {
             axios.get("api/padres").then(response => {
-                this.padres = response.data.data;
+                this.data.padres = response.data.data.padres;
             });
         },
         handleFunction() {},
         editItem(item) {
-            this.editedIndex = this.padres.indexOf(item);
+            this.editedIndex = this.data.padres.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
         deleteItem(item) {
-            this.editedIndex = this.padres.indexOf(item);
+            this.editedIndex = this.data.padres.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
@@ -263,4 +284,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style>
+@font-face {
+    font-family: "Janna";
+    src: url("../../../../public/fonts/Changa-VariableFont_wght.ttf");
+}
+
+.arabic-text {
+    font-family: "Janna";
+}
+</style>

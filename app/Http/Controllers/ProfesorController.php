@@ -48,7 +48,35 @@ class ProfesorController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        // Buscamos un padre por el id.
+        $profesor = Profesor::find($id);
+
+
+        // Si no existe padre devolvemos un error.
+        if (!$profesor) {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+            // En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+            return response()->json(
+                [
+                    'errors' => array([
+                        'code' => 404,
+                        'message' => 'No se encuentra un padre con ese código.'
+                    ]),
+                    'id' => $id,
+                ],
+                404
+            );
+        }
+
+        return response()->json(
+            [
+                'status' => 'ok',
+                'profesor' => $profesor,
+  
+            200]
+        );
+    
     }
 
     /**

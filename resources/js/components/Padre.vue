@@ -2,7 +2,7 @@
     <div>
         <nav-bar></nav-bar>
 
-        <v-card class="mx-auto mt-10" max-width="90%">
+        <v-card class="mx-auto mt-10" max-width="92%">
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Ficha Padre</v-toolbar-title>
             </v-toolbar>
@@ -55,7 +55,20 @@
                                     <v-list-item-content>
                                         <v-list-item-title>
                                             Teléfono
+                                            <v-btn
+                                                class="mx-2 whatsapp-button"
+                                                fab
+                                                small
+                                                color="green"
+                                                outlined
+                                                @click="goToWhatsApp"
+                                            >
+                                                <v-icon>
+                                                    mdi-whatsapp
+                                                </v-icon>
+                                            </v-btn>
                                         </v-list-item-title>
+
                                         <v-list-item-subtitle>{{
                                             padre.telefono
                                         }}</v-list-item-subtitle>
@@ -200,29 +213,24 @@
                             </v-list>
                         </v-card-text>
                     </v-card>
-                    <v-container ml-16>
-                        <v-btn
-                            color="warning"
-                            x-large
-                            dark
-                            type="submit"
-                            @click="newPay()"
-                        >
-                            Nuevo pago
-                        </v-btn>
-                        <v-btn
-                            color="primary"
-                            x-large
-                            dark
-                            type="submit"
-                            @click="printPDF()"
-                        >
-                            Imprimir
-                        </v-btn>
-                    </v-container>
                 </v-tab-item>
             </v-tabs>
         </v-card>
+
+        <v-container class="buttons" ml-16>
+            <v-btn color="warning" x-large dark type="submit" @click="newPay()">
+                Nuevo pago
+            </v-btn>
+            <v-btn
+                color="primary"
+                x-large
+                dark
+                type="submit"
+                @click="printPDF()"
+            >
+                Imprimir
+            </v-btn>
+        </v-container>
 
         <v-dialog v-model="dialog" max-width="500px">
             <v-card>
@@ -335,6 +343,13 @@ export default {
                 "-" +
                 date.getFullYear()
             );
+        },
+        goToWhatsApp() {
+            window.open(
+                "https://api.whatsapp.com/send?phone=34" +
+                    this.padre.telefono +
+                    "&attachment=C:/Users/Ahmad/DownloadfichaPadre.pdf"
+            );
         }
     },
     created() {
@@ -342,3 +357,15 @@ export default {
     }
 };
 </script>
+
+<style>
+.whatsapp-button {
+    margin: 2px;
+    padding: 2px;
+}
+
+.buttons {
+    padding: auto;
+    margin: 10px;
+}
+</style>

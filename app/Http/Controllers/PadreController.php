@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Padre;
+use Illuminate\Support\Facades\DB;
 
 class PadreController extends Controller
 {
@@ -14,7 +15,31 @@ class PadreController extends Controller
      */
     public function index()
     {
-        return response()->json(['status' => 'ok', 'data' => Padre::all()], 200);
+        $padres = DB::table('padres')
+            ->join('pagos', 'padres.id', '=', 'pagos.padres_id')
+            ->select('padres.*', DB::raw('sum(cantidad) as pagado'))
+            ->groupBy(
+                'padres.dni',
+                'padres.id',
+                'padres.name',
+                'padres.surname',
+                'padres.name_ar',
+                'padres.surname_ar',
+                'padres.telefono',
+                'padres.email',
+                'padres.address',
+                'padres.city',
+                'padres.postalcode',
+                'padres.created_at',
+                'padres.updated_at',
+                'padres.Matricula',
+                'padres.Descuento'
+            )
+            ->get();
+
+        // return response()->json(['status' => 'ok', 'data' =>  ['padres' => $padres] + ['pagos' => $array_pagos]], 200);
+
+        return response()->json(['status' => 'ok', 'data' =>  ['padres' => $padres]], 200);
     }
 
     /**

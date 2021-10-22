@@ -57,7 +57,7 @@ const router = new VueRouter({
             component: Alumno
         },
         {
-            path: "/profesor/:id",
+            path: "/profesores/:id",
             component: Profesor
         },
         {

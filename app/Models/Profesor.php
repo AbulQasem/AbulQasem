@@ -11,4 +11,14 @@ class Profesor extends Model
 
     protected $table = 'profesores';
 
+    public function alumnos()
+    {
+        return $this->hasMany(Alumno::class);
+    }
+    
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class, 'profesores_id');
+    }
+
 }

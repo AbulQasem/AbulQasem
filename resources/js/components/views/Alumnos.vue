@@ -31,8 +31,13 @@
                     <v-icon small @click="deleteItem(item)">
                         mdi-delete
                     </v-icon>
-                </template></v-data-table
-            >
+                </template>
+
+                <template v-slot:item.nivel="{ item }">
+                    <span v-if="item.nivel == 0"> {{ "INFANTIL" }}</span>
+                    <span v-else> {{ item.nivel }}</span>
+                </template>
+            </v-data-table>
         </v-card>
 
         <v-dialog v-model="dialog" max-width="800px">
@@ -90,7 +95,7 @@
                         </v-row>
 
                         <v-row>
-                            <v-col cols="12" md="12">
+                            <v-col cols="12" md="8">
                                 <v-select
                                     id="grupos_id"
                                     name="grupos_id"
@@ -100,6 +105,24 @@
                                     :items="grupos"
                                     item-text="id"
                                 >
+                                    <template
+                                        slot="selection"
+                                        slot-scope="data"
+                                    >
+                                        <span v-if="data.item.nivel == 0">
+                                            {{ "INFANTIL" }}</span
+                                        >
+                                        <span v-else>
+                                            {{ data.item.nivel }}</span
+                                        >
+                                        {{
+                                            " - " +
+                                                data.item.dia +
+                                                " - " +
+                                                data.item.horario
+                                        }}
+                                    </template>
+
                                     <template v-slot:item="{ item }">
                                         <span v-if="item.nivel == 0">
                                             {{ "INFANTIL" }}</span
@@ -114,6 +137,54 @@
                                     </template>
                                 </v-select>
                             </v-col>
+
+                            <v-col cols="12" sm="6" md="4">
+                                <v-menu
+                                    ref="menu"
+                                    v-model="menu"
+                                    :close-on-content-click="false"
+                                    :return-value.sync="editedItem.birthday"
+                                    transition="scale-transition"
+                                    offset-y
+                                    min-width="auto"
+                                >
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-text-field
+                                            v-model="editedItem.birthday"
+                                            label="Picker in menu"
+                                            prepend-icon="mdi-calendar"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                        ></v-text-field>
+                                    </template>
+                                    <v-date-picker
+                                        v-model="editedItem.birthday"
+                                        no-title
+                                        scrollable
+                                    >
+                                        <v-spacer></v-spacer>
+                                        <v-btn
+                                            text
+                                            color="primary"
+                                            @click="menu = false"
+                                        >
+                                            Cancel
+                                        </v-btn>
+                                        <v-btn
+                                            text
+                                            color="primary"
+                                            @click="
+                                                $refs.menu.save(
+                                                    editedItem.birthday
+                                                )
+                                            "
+                                        >
+                                            OK
+                                        </v-btn>
+                                    </v-date-picker>
+                                </v-menu>
+                            </v-col>
+                            <v-spacer></v-spacer>
                         </v-row>
                     </v-container>
                 </v-card-text>
@@ -139,6 +210,12 @@ export default {
     name: "alumnos",
     data() {
         return {
+            date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+                .toISOString()
+                .substr(0, 10),
+            menu: false,
+            modal: false,
+            menu2: false,
             editedIndex: -1,
             editedItem: {},
             dialog: false,
@@ -151,6 +228,7 @@ export default {
                 { text: "Apellido", value: "surname" },
                 { text: "الإسم", value: "surname_ar" },
                 { text: "اللقب", value: "name_ar" },
+                { text: "Fecha de Nacimiento", value: "birthday" },
                 { text: "Nivel", value: "nivel" },
                 { text: "Dia", value: "dia" },
                 { text: "Horario", value: "horario" },
@@ -195,11 +273,27 @@ export default {
                 })
                 .finally(() => {});
         },
-        getItemText(item) {}
+        formatDate(date) {
+            if (!date) return null;
+
+            const [year, month, day] = date.split("-");
+            return `${month}/${day}/${year}`;
+        },
+        parseDate(date) {
+            if (!date) return null;
+
+            const [month, day, year] = date.split("/");
+            return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+        }
     },
     created() {
         this.getAlumnos();
         this.getGrupos();
+    },
+    computed: {
+        computedDateFormatted() {
+            return this.formatDate(this.date);
+        }
     }
 };
 </script>

@@ -5,6 +5,16 @@
         <v-card>
             <v-card-title>
                 Profesores
+                <v-btn
+                    color="primary"
+                    dark
+                    type="submit"
+                    @click="newProfesor()"
+                    class="ml-4"
+                >
+                    +
+                </v-btn>
+
                 <v-spacer></v-spacer>
                 <v-text-field
                     v-model="search"
@@ -42,7 +52,9 @@
             <v-dialog v-model="dialog" max-width="800px">
                 <v-card>
                     <v-card-title>
-                        <span class="text-h5"> Editar datos del Alumno/a</span>
+                        <span class="text-h5">
+                            Editar datos del Profesor/a</span
+                        >
                     </v-card-title>
 
                     <v-card-text>
@@ -92,6 +104,50 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
+
+                            <v-row>
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        id="email"
+                                        name="email"
+                                        placeholder="Correo"
+                                        label="E-mail"
+                                        v-model="editedItem.email"
+                                    ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        id="dni"
+                                        name="dni"
+                                        placeholder="DNI"
+                                        label="DNI"
+                                        v-model="editedItem.dni"
+                                    ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="4">
+                                    <v-text-field
+                                        id="phone"
+                                        name="telefono"
+                                        placeholder="Telefono"
+                                        label="Telefono"
+                                        v-model="editedItem.telefono"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+
+                            <v-row>
+                                <v-col cols="12" md="12">
+                                    <v-text-field
+                                        id="address"
+                                        name="address"
+                                        placeholder="address"
+                                        label="address"
+                                        v-model="editedItem.address"
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
                         </v-container>
                     </v-card-text>
 
@@ -106,14 +162,21 @@
                     </v-card-actions>
                 </v-card>
             </v-dialog>
+
+            <profesor-form
+                :activate="profesorForm"
+                @close-form-event="closeForm"
+            ></profesor-form>
         </v-card>
     </div>
 </template>
 
 <script>
 import NavBar from "../NavBar.vue";
+import ProfesorForm from "../ProfesorForm.vue";
+
 export default {
-    components: { NavBar },
+    components: { NavBar, ProfesorForm },
     name: "profesores",
     data() {
         return {
@@ -121,6 +184,7 @@ export default {
             editedItem: {},
             search: "",
             dialog: false,
+            profesorForm: false,
             profesores: [],
             headers: [
                 { text: "Id", value: "id" },
@@ -158,7 +222,7 @@ export default {
                 .put("api/profesores/" + this.editedItem.id, this.editedItem)
                 .then(response => {
                     if (response.status === 200) {
-                        this.getPro();
+                        this.getProfesores();
                     }
                 })
                 .catch(error => {
@@ -166,8 +230,15 @@ export default {
                 })
                 .finally(() => {});
         },
+        newProfesor() {
+            this.profesorForm = true;
+        },
         goToFile(item) {
             this.$router.push("/profesores/" + item.id);
+        },
+        closeForm() {
+            this.profesorForm = false;
+            this.getProfesores();
         }
     },
     created() {

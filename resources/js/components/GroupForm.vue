@@ -7,62 +7,58 @@
     >
         <v-card>
             <v-card-title class="text-h5">Nuevo grupo</v-card-title>
+            <v-container>
+                <v-row>
+                    <v-col cols="6" sm="6">
+                        <v-select
+                            v-model="grupo.profesores_id"
+                            id="docente"
+                            label="Profesor"
+                            :items="profesores"
+                            item-text="name"
+                            item-value="id"
+                        >
+                        </v-select>
+                    </v-col>
+                    <v-col cols="6" sm="6">
+                        <v-select
+                            :items="days"
+                            label="Dia de la semana"
+                            placeholder="Dia de la semana"
+                            required
+                            v-model="grupo.dia"
+                        ></v-select>
+                    </v-col>
 
-            <v-card-text>
-                <v-container>
-                    <v-row>
-                        <v-col cols="6" sm="6">
-                            <v-select
-                                v-model="grupo.profesores_id"
-                                id="docente"
-                                label="Profesor"
-                                :items="profesores"
-                                item-text="name"
-                                item-value="id"
-                            >
-                            </v-select>
-                        </v-col>
-                        <v-col cols="6" sm="6">
-                            <v-select
-                                :items="days"
-                                label="Dia de la semana"
-                                placeholder="Dia de la semana"
-                                required
-                                v-model="grupo.dia"
-                            ></v-select>
-                        </v-col>
-
-                        <v-col cols="6" sm="4">
-                            <v-select
-                                :items="times"
-                                label="Horario"
-                                placeholder="Horario"
-                                required
-                                v-model="grupo.horario"
-                            ></v-select>
-                        </v-col>
-                        <v-col cols="6" sm="4">
-                            <v-select
-                                :items="levels"
-                                label="Nivel"
-                                placeholder="Nivel"
-                                required
-                                v-model="grupo.nivel"
-                            ></v-select>
-                        </v-col>
-                        <v-col cols="4" sm="4">
-                            <v-select
-                                :items="aula"
-                                label="Aula"
-                                placeholder="Aula"
-                                required
-                                v-model="grupo.aula"
-                            ></v-select>
-                        </v-col>
-                    </v-row>
-                </v-container>
-            </v-card-text>
-
+                    <v-col cols="6" sm="4">
+                        <v-select
+                            :items="times"
+                            label="Horario"
+                            placeholder="Horario"
+                            required
+                            v-model="grupo.horario"
+                        ></v-select>
+                    </v-col>
+                    <v-col cols="6" sm="4">
+                        <v-select
+                            :items="levels"
+                            label="Nivel"
+                            placeholder="Nivel"
+                            required
+                            v-model="grupo.nivel"
+                        ></v-select>
+                    </v-col>
+                    <v-col cols="4" sm="4">
+                        <v-select
+                            :items="aula"
+                            label="Aula"
+                            placeholder="Aula"
+                            required
+                            v-model="grupo.aula"
+                        ></v-select>
+                    </v-col>
+                </v-row>
+            </v-container>
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue darken-1" text @click="close"

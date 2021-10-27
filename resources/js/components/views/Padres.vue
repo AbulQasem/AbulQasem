@@ -2,7 +2,7 @@
     <div>
         <nav-bar></nav-bar>
 
-        <v-card>
+        <v-card class="mx-auto mt-5" width="95%">
             <v-card-title>
                 Padres
                 <v-spacer></v-spacer>
@@ -47,7 +47,7 @@
             </v-data-table>
         </v-card>
 
-        <v-dialog v-model="dialog" max-width="800px">
+        <v-dialog v-model="dialog" max-width="900px">
             <v-card>
                 <v-card-title>
                     <span class="text-h5"> Editar datos Padre/Madre </span>
@@ -134,13 +134,33 @@
                         </v-row>
 
                         <v-row>
-                            <v-col cols="12" md="12">
+                            <v-col cols="12" md="6">
                                 <v-text-field
                                     id="address"
                                     name="address"
                                     placeholder="address"
                                     label="address"
                                     v-model="editedItem.address"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="3">
+                                <v-text-field
+                                    id="city"
+                                    name="city"
+                                    placeholder="city"
+                                    label="city"
+                                    v-model="editedItem.city"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="3">
+                                <v-text-field
+                                    id="postalcode"
+                                    name="postalcode"
+                                    placeholder="postalcode"
+                                    label="postalcode"
+                                    v-model="editedItem.postalcode"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -191,7 +211,6 @@ export default {
             search: "",
             data: {
                 padres: [],
-                pagos: []
             },
             editedIndex: -1,
             editedItem: {},
@@ -216,7 +235,7 @@ export default {
             console.log(percent);
 
             if (percent < 30) return "red";
-            else if ((percent < 80) && (percent >= 30)) return "orange";
+            else if (percent < 80 && percent >= 30) return "orange";
             else return "green";
         },
         getPadres() {

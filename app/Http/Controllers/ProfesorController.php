@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Profesor; 
+use App\Models\Profesor;
 
 class ProfesorController extends Controller
 {
@@ -16,7 +16,6 @@ class ProfesorController extends Controller
     {
         //
         return response()->json(['status' => 'ok', 'data' => Profesor::all()], 200);
-
     }
 
     /**
@@ -37,7 +36,21 @@ class ProfesorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $profesor = new Profesor();
+
+        $profesor->name = $request->name;
+        $profesor->surname = $request->surname;
+        $profesor->name_ar = $request->name_ar;
+        $profesor->surname_ar = $request->surname_ar;
+        $profesor->dni = $request->dni;
+        $profesor->email = $request->email;
+        $profesor->telefono = $request->telefono;
+        $profesor->address = $request->direccion;
+        $profesor->city = $request->city;
+        $profesor->postalcode = $request->postalcode;
+        $profesor->save();
+
+        return response()->json(['code' => 200, 'message' => 'Profesor creado correctamente.'], 200);
     }
 
     /**
@@ -48,7 +61,7 @@ class ProfesorController extends Controller
      */
     public function show($id)
     {
-        
+
         // Buscamos un padre por el id.
         $profesor = Profesor::find($id);
 
@@ -69,14 +82,18 @@ class ProfesorController extends Controller
             );
         }
 
+        $grupos = $profesor->grupos()->where('profesores_id', '=', $id)->get();
+
+
         return response()->json(
             [
                 'status' => 'ok',
                 'profesor' => $profesor,
-  
-            200]
+                'grupos' => $grupos,
+
+                200
+            ]
         );
-    
     }
 
     /**
@@ -99,7 +116,42 @@ class ProfesorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $profesor = Profesor::find($id);
+
+        // Si no existe padre devolvemos un error.
+        if (!$profesor) {
+            // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.
+            // En code podríamos indicar un código de error personalizado de nuestra aplicación si lo deseamos.
+            return response()->json(
+                [
+                    'errors' => array([
+                        'code' => 404,
+                        'message' => 'No se encuentra un padre con ese código.'
+                    ]),
+                    'id' => $id,
+                ],
+                404
+            );
+        }
+
+        $profesor->name = $request->name;
+        $profesor->surname = $request->surname;
+        $profesor->name_ar = $request->name_ar;
+        $profesor->surname_ar = $request->surname_ar;
+        $profesor->dni = $request->dni;
+        $profesor->telefono = $request->telefono;
+        $profesor->email = $request->email;
+        $profesor->address = $request->address;
+        $profesor->city = $request->city;
+
+        $profesor->update();
+
+        return response()->json(
+            [
+                'status' => 'updated ok',
+            ],
+            200
+        );
     }
 
     /**

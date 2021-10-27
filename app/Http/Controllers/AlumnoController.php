@@ -99,6 +99,7 @@ class AlumnoController extends Controller
         $alumno->surname = $request->surname;
         $alumno->name_ar = $request->name_ar;
         $alumno->surname_ar = $request->surname_ar;
+        $alumno->birthday = $request->birthday;
         $alumno->grupos_id = $request->grupos_id;
         $alumno->update();
 

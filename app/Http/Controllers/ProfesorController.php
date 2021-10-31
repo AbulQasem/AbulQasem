@@ -82,6 +82,7 @@ class ProfesorController extends Controller
             );
         }
 
+        // Get all the groups
         $grupos = $profesor->grupos()->where('profesores_id', '=', $id)->get();
 
 

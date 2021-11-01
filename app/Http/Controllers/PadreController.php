@@ -73,10 +73,17 @@ class PadreController extends Controller
     {
         // Buscamos un padre por el id.
         $padre = Padre::find($id);
-        $alumnos = $padre->alumnos()->where('padres_id', '=', $id)->get();
+        $alumnos = $padre->alumnos()->where('padres_id', '=', $id)
+            ->leftJoin('grupos', "grupos.id", "=", "alumnos.grupos_id")
+            ->select('alumnos.*', 'grupos.nivel', "grupos.horario", "grupos.dia")
+            ->get();
+
         $pagos = $padre->pagos()->where('padres_id', '=', $id)->get();
 
-
+        // $alumnos = DB::table('alumnos')
+        // ->join('grupos', "padres.id", "=", "alumnos.padres_id")
+        // ->select('alumnos.*', 'grupos.nivel', "grupos.horario", "grupos.dia")
+        // ->get();
         // Si no existe padre devolvemos un error.
         if (!$padre) {
             // Se devuelve un array errors con los errores encontrados y cabecera HTTP 404.

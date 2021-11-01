@@ -2,11 +2,11 @@
     <div>
         <nav-bar></nav-bar>
 
-        <v-card class="mx-auto mt-10" max-width="92%">
+        <v-card class="mx-auto mt-10 arabic-text" max-width="92%">
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Ficha Padre</v-toolbar-title>
             </v-toolbar>
-            <v-tabs vertical>
+            <v-tabs  vertical>
                 <v-tab>
                     <v-icon left>
                         mdi-account
@@ -177,9 +177,23 @@
                                         <v-list-item-title>
                                             Grupo
                                         </v-list-item-title>
-                                        <v-list-item-subtitle>{{
-                                            hijo.grupos_id
-                                        }}</v-list-item-subtitle>
+                                        <v-list-item-subtitle>
+                                            <span v-if="hijo.nivel == 0">
+                                                {{ "INFANTIL" }}</span
+                                            >
+                                            <span v-if="hijo.nivel == null">
+                                                {{ " - " }}</span
+                                            >
+                                            <span v-else>
+                                                {{ hijo.nivel + "º " }}</span
+                                            >
+                                            {{
+                                                " - " +
+                                                    hijo.dia +
+                                                    " - " +
+                                                    hijo.horario
+                                            }}
+                                        </v-list-item-subtitle>
                                     </v-list-item-content>
                                 </v-list-item>
                                 <v-divider></v-divider>
@@ -330,7 +344,6 @@ export default {
                 });
         },
         printPDF() {
-            console.log("Boton pulsado");
             this.print = true;
         },
         dateFormat(isoDate) {

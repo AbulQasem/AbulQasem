@@ -1,7 +1,7 @@
 <template>
     <div>
         <nav-bar></nav-bar>
-        <v-card>
+        <v-card class="mx-auto mt-5" width="90%">
             <v-card-title>
                 Alumnos
                 <v-spacer></v-spacer>
@@ -19,7 +19,7 @@
                 :headers="headers"
                 :items="alumnos"
                 item-key="id"
-                class="elevation-1t arabic-text"
+                class="arabic-text"
                 :search="search"
                 :items-per-page="30"
             >
@@ -46,7 +46,7 @@
                     <span class="text-h5"> Editar datos del Alumno/a</span>
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="arabic-text">
                     <v-container>
                         <v-row>
                             <v-col cols="12" md="6">
@@ -78,7 +78,6 @@
                                     placeholder="اسم"
                                     label="اسم"
                                     v-model="editedItem.name_ar"
-                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
 
@@ -89,7 +88,6 @@
                                     placeholder="لقب"
                                     label="لقب"
                                     v-model="editedItem.surname_ar"
-                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -113,10 +111,10 @@
                                             {{ "INFANTIL" }}</span
                                         >
                                         <span v-else>
-                                            {{ data.item.nivel }}</span
+                                            {{ data.item.nivel + "º " }}</span
                                         >
                                         {{
-                                            " - " +
+                                            "  - " +
                                                 data.item.dia +
                                                 " - " +
                                                 data.item.horario
@@ -127,7 +125,9 @@
                                         <span v-if="item.nivel == 0">
                                             {{ "INFANTIL" }}</span
                                         >
-                                        <span v-else> {{ item.nivel }}</span>
+                                        <span v-else>
+                                            {{ item.nivel + "º " }}</span
+                                        >
                                         {{
                                             " - " +
                                                 item.dia +
@@ -260,7 +260,6 @@ export default {
             this.close();
         },
         submitForm() {
-            console.log(this.editedItem);
             axios
                 .put("api/alumnos/" + this.editedItem.id, this.editedItem)
                 .then(response => {
@@ -298,13 +297,4 @@ export default {
 };
 </script>
 
-<style>
-@font-face {
-    font-family: "Janna";
-    src: url("../../../../public/fonts/Janna LT Bold.ttf");
-}
-
-.arabic-text {
-    font-family: "Janna";
-}
-</style>
+<style></style>

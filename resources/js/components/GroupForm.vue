@@ -4,6 +4,7 @@
         v-model="activate"
         max-width="800px"
         persistent
+        class="arabic-text"
     >
         <v-card>
             <v-card-title class="text-h5">Nuevo grupo</v-card-title>

@@ -230,7 +230,6 @@ export default {
             this.submitForm();
         },
         submitForm() {
-            console.log(this.profesor);
             axios
                 .post("api/profesores/", this.profesor)
                 .then(response => {

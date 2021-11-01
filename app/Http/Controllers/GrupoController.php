@@ -62,8 +62,12 @@ class GrupoController extends Controller
     public function show($id)
     {
         $grupo = Grupo::find($id);
-        $alumnos = $grupo->alumnos()->where('grupos_id', '=', $id)->get();
-        $profesor = $grupo->profesores()->get();        
+        $alumnos = $grupo->alumnos()->where('grupos_id', '=', $id)
+            ->leftJoin('padres', "padres.id", "=", "alumnos.padres_id")
+            ->select('alumnos.*', 'padres.telefono')
+            ->get();
+
+        $profesor = $grupo->profesores()->get();
 
 
         return response()->json(

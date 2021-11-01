@@ -9,7 +9,6 @@
       vertical
     ></v-divider>
 
-    <span class="subheading">Inicio</span>
 
     <v-spacer></v-spacer>
 

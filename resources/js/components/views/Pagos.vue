@@ -20,7 +20,7 @@
                 :headers="headers"
                 :items="pagos"
                 item-key="id"
-                class="elevation-1"
+                class="arabic-text"
                 :search="search"
             >
                 <template v-slot:item.actions="{ item }">
@@ -86,8 +86,6 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-
-
     </div>
 </template>
 
@@ -164,9 +162,7 @@ export default {
                         this.getPagos();
                     }
                 })
-                .catch(error => {
-                    console.log(this.$data);
-                })
+                .catch(error => {})
                 .finally(() => {
                     //Perform action in always
                 });

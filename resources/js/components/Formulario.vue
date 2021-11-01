@@ -1,5 +1,5 @@
 <template>
-    <v-container class="formulario">
+    <v-container class="formulario arabic-text">
         <v-form v-on:submit.prevent="submitForm">
             <v-container>
                 <v-row>
@@ -147,7 +147,7 @@
                         {{ "Datos del hijo/a" }}
                     </v-card-title>
 
-                    <v-card-text>
+                    <v-card-text class="arabic-text"> 
                         <table class="form-group" id="dynamic_field">
                             <div class="row">
                                 <div class="col-2">Nombre</div>

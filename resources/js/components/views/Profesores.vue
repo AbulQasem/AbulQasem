@@ -31,7 +31,7 @@
                 :items="profesores"
                 :items-per-page="15"
                 item-key="id"
-                class="elevation-1 arabic-text"
+                class="arabic-text"
                 :search="search"
             >
                 <template v-slot:item.actions="{ item }">
@@ -57,7 +57,7 @@
                         >
                     </v-card-title>
 
-                    <v-card-text>
+                    <v-card-text class="arabic-text">
                         <v-container>
                             <v-row>
                                 <v-col cols="12" md="6">
@@ -89,7 +89,6 @@
                                         placeholder="اسم"
                                         label="اسم"
                                         v-model="editedItem.name_ar"
-                                        class="arabic-text"
                                     ></v-text-field>
                                 </v-col>
 
@@ -100,7 +99,6 @@
                                         placeholder="لقب"
                                         label="لقب"
                                         v-model="editedItem.surname_ar"
-                                        class="arabic-text"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -138,13 +136,33 @@
                             </v-row>
 
                             <v-row>
-                                <v-col cols="12" md="12">
+                                <v-col cols="12" md="6">
                                     <v-text-field
                                         id="address"
                                         name="address"
-                                        placeholder="address"
-                                        label="address"
+                                        placeholder="Dirección"
+                                        label="Dirección"
                                         v-model="editedItem.address"
+                                    ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="3">
+                                    <v-text-field
+                                        id="city"
+                                        name="city"
+                                        placeholder="Ciudad"
+                                        label="Ciudad"
+                                        v-model="editedItem.city"
+                                    ></v-text-field>
+                                </v-col>
+
+                                <v-col cols="12" md="3">
+                                    <v-text-field
+                                        id="postalcode"
+                                        name="postalcode"
+                                        placeholder="CP"
+                                        label="CP"
+                                        v-model="editedItem.postalcode"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -217,7 +235,6 @@ export default {
             this.close();
         },
         submitForm() {
-            console.log(this.editedItem);
             axios
                 .put("api/profesores/" + this.editedItem.id, this.editedItem)
                 .then(response => {
@@ -225,9 +242,7 @@ export default {
                         this.getProfesores();
                     }
                 })
-                .catch(error => {
-                    console.log(this.$data);
-                })
+                .catch(error => {})
                 .finally(() => {});
         },
         newProfesor() {
@@ -247,13 +262,4 @@ export default {
 };
 </script>
 
-<style>
-@font-face {
-    font-family: "Janna";
-    src: url("../../../../public/fonts/Janna LT Bold.ttf");
-}
-
-.arabic-text {
-    font-family: "Janna";
-}
-</style>
+<style></style>

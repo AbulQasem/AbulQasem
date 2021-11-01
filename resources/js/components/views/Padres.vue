@@ -21,9 +21,9 @@
                 :items="data.padres"
                 :items-per-page="25"
                 item-key="id"
-                class="elevation-1 arabic-text"
                 :search="search"
                 @row-click="handleFunction"
+                class="arabic-text"
             >
                 <template v-slot:item.actions="{ item }">
                     <v-icon small class="mr-2" @click="editItem(item)">
@@ -50,10 +50,10 @@
         <v-dialog v-model="dialog" max-width="900px">
             <v-card>
                 <v-card-title>
-                    <span class="text-h5"> Editar datos Padre/Madre </span>
+                    <span> Editar datos Padre/Madre </span>
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="arabic-text">
                     <v-container>
                         <v-row>
                             <v-col cols="12" md="6">
@@ -85,7 +85,6 @@
                                     placeholder="اسم"
                                     label="اسم الأب"
                                     v-model="editedItem.name_ar"
-                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
 
@@ -96,7 +95,6 @@
                                     placeholder="لقب"
                                     label="لقب الأب"
                                     v-model="editedItem.surname_ar"
-                                    class="arabic-text"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -210,7 +208,7 @@ export default {
             dialogDelete: false,
             search: "",
             data: {
-                padres: [],
+                padres: []
             },
             editedIndex: -1,
             editedItem: {},
@@ -232,7 +230,6 @@ export default {
     methods: {
         getColor(item) {
             const percent = (item.pagado / item.Matricula) * 100;
-            console.log(percent);
 
             if (percent < 30) return "red";
             else if (percent < 80 && percent >= 30) return "orange";
@@ -305,11 +302,12 @@ export default {
 
 <style>
 @font-face {
-    font-family: "Janna";
-    src: url("../../../../public/fonts/Changa-VariableFont_wght.ttf");
+    font-family: "arabic-text";
+    src: url("../../../../public/fonts/Cocon-Next-Arabic-Light.otf");
 }
 
 .arabic-text {
-    font-family: "Janna";
+    font-family: "arabic-text";
 }
+
 </style>

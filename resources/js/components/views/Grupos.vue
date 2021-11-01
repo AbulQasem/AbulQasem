@@ -32,7 +32,7 @@
                 :headers="headers"
                 :items="grupos"
                 item-key="id"
-                class="elevation-1"
+                class="arabic-text"
                 :search="search"
             >
                 <template v-slot:item.actions="{ item }">
@@ -57,7 +57,7 @@
                     <span class="text-h5"> Editar datos del Grupo</span>
                 </v-card-title>
 
-                <v-card-text>
+                <v-card-text class="arabic-text">
                     <v-container>
                         <v-row>
                             <v-col cols="12" md="6">

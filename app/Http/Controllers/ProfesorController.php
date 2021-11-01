@@ -144,6 +144,7 @@ class ProfesorController extends Controller
         $profesor->email = $request->email;
         $profesor->address = $request->address;
         $profesor->city = $request->city;
+        $profesor->postalcode = $request->postalcode;
 
         $profesor->update();
 

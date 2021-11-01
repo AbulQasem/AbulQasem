@@ -134,7 +134,6 @@ export default {
                     }
                 })
                 .catch(error => {
-                    console.log("ERROR");
                 })
                 .finally(() => {
                     //Perform action in always

@@ -29,22 +29,31 @@
                 striped
             ></v-data-table>
 
-            <v-btn color="warning" class="m-2" dark @click="generateReport()">
+            <v-btn color="warning" class="m-2" dark @click="printPDF()">
                 Imprimir lista
             </v-btn>
         </v-card>
+
+        <grupo-pdf
+            v-bind:print="print"
+            v-bind:alumnos="alumnos"
+            v-bind:grupo="grupo"
+            v-on:printed="print = false"
+        ></grupo-pdf>
+        
     </div>
 </template>
 
 <script>
 import NavBar from "./NavBar.vue";
-import VueHtml2pdf from "vue-html2pdf";
+import GrupoPdf from './GrupoPDF.vue';
 
 export default {
-    components: { NavBar, VueHtml2pdf },
+    components: { NavBar, GrupoPdf},
     name: "profesores",
     data() {
         return {
+            print: false,
             search: "",
             alumnos: [],
             profesor: {},
@@ -70,6 +79,9 @@ export default {
         },
         generateReport() {
             this.$refs.html2Pdf.generatePdf();
+        },
+        printPDF() {
+            this.print = true;
         }
     },
     created() {
@@ -78,4 +90,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

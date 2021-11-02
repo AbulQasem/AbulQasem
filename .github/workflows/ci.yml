@@ -28,5 +28,5 @@ jobs:
       with:
         username: ${{ secrets.USERNAME }}
         host: ${{ secrets.SSH_HOST }}
-        password: ${{ secrets.SSH_PASSWORD }}
+        password: ${{ secrets.SSH_PRIVATE_KEY }}
         script: 'cd /var/www/html && ./server_deploy.sh'

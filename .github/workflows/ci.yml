@@ -30,4 +30,4 @@ jobs:
         host: ${{ secrets.SSH_HOST }}
         password: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.SSH_PORT }}
-        script: 'cd /var/www/html && ./server_deploy.sh'
+        script: 'cd var/www/html && ./server_deploy.sh'

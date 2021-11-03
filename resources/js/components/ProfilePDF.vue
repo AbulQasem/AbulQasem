@@ -16,7 +16,7 @@
             <section slot="pdf-content">
                 <v-card flat>
                     <v-card-title>
-                        Escuela de árabe Abu Al-Qasem de Zaragoza
+                        Escuela Abu Al-Qasem de Zaragoza
                     </v-card-title>
 
                     <v-divider></v-divider>

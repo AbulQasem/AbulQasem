@@ -1,46 +1,47 @@
 name: ci/cd workflow
- 
+
 on:
- push:
-   branches:
-     - master
-     - features/*
- pull_request:
-  
- deploy:
-   runs-on: ubuntu-latest
-   needs: tests
-   if: github.ref == 'refs/heads/master'
-   steps:
-     - name: Checkout code
-       uses: actions/checkout@v2
- 
-     - name: Cache PHP dependencies
-       uses: actions/cache@v1
-       with:
-         path: vendor
-         key: dependencies-php-composer-${{ hashFiles('**/composer.lock') }}
- 
-     - name: Setup PHP
-       uses: shivammathur/setup-php@v2
-       with:
-         php-version: 7.3
-         extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
-         coverage: none
- 
-     - name: Install dependencies
-       run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
- 
-     - name: Copy dotenv file
-       run: php -r "file_put_contents(__DIR__ . '/.env', '${{ secrets.DOT_ENV }}');"
- 
-     - name: Deploy
-       uses: AEnterprise/rsync-deploy@v1.0
-       env:
-         DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-         ARGS: '-avzh --exclude=".*"'
-         SERVER_PORT: ${{ secrets.SSH_PORT }}
-         FOLDER: "./"
-         SERVER_IP: ${{ secrets.SSH_HOST }}
-         USERNAME: ${{ secrets.SSH_USERNAME }}
-         SERVER_DESTINATION: "/var/www/html/AbulQasem"
+  push:
+    branches:
+      - master
+      - features/*
+  pull_request:
+
+job:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: tests
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache PHP dependencies
+        uses: actions/cache@v1
+        with:
+          path: vendor
+          key: dependencies-php-composer-${{ hashFiles('**/composer.lock') }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.3
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, gd
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
+
+      - name: Copy dotenv file
+        run: php -r "file_put_contents(__DIR__ . '/.env', '${{ secrets.DOT_ENV }}');"
+
+      - name: Deploy
+        uses: AEnterprise/rsync-deploy@v1.0
+        env:
+          DEPLOY_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: '-avzh --exclude=".*"'
+          SERVER_PORT: ${{ secrets.SSH_PORT }}
+          FOLDER: "./"
+          SERVER_IP: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USERNAME }}
+          SERVER_DESTINATION: "/var/www/html/AbulQasem"

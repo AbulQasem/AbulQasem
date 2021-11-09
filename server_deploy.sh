@@ -13,13 +13,10 @@ echo "Deploying application ..."
     /usr/bin/php7.4-cli composer.phar install --no-interaction --prefer-dist --optimize-autoloader
     /usr/bin/php7.4-cli composer.phar dump-autoload
  
-  
- 
+   
     # Clear cache
     /usr/bin/php7.4-cli artisan optimize
  
-    # Reload PHP to update opcache
-    echo "" | sudo -S service php7.4-fpm reload
 
     # Exit maintenance mode
     /usr/bin/php7.4-cli artisan up

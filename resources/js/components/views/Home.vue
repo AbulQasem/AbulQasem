@@ -2,7 +2,7 @@
     <div>
         
             <nav-bar></nav-bar>
-       
+
         <!--La equita id debe ser app, como hemos visto en app.js-->
     </div>
 </template>

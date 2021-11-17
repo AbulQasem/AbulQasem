@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
+    "jwt-decode": "^3.1.2",
     "roboto-fontface": "*",
     "vee-validate": "^4.4.7",
     "vue-axios": "^3.2.4",
@@ -21,7 +22,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^5.9.55",
-    "axios": "^0.21",
+    "axios": "^0.21.4",
     "bootstrap": "^5.0.2",
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "deepmerge": "^4.2.2",

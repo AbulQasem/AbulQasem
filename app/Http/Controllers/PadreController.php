@@ -16,7 +16,7 @@ class PadreController extends Controller
     public function index()
     {
         $padres = DB::table('padres')
-            ->join('pagos', 'padres.id', '=', 'pagos.padres_id')
+            ->leftJoin('pagos', 'padres.id', '=', 'pagos.padres_id')
             ->select('padres.*', DB::raw('sum(cantidad) as pagado'))
             ->groupBy(
                 'padres.dni',

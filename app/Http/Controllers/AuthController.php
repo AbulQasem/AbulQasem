@@ -80,31 +80,10 @@ class AuthController extends Controller
     {
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
-
+            'token_type' => 'Bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            "scope" => "openid",
         ]);
     }
 
-    // public function register(Request $request)
-    // {
-    //     $validator = Validator::make($request->all(), [
-    //         'name' => 'required',
-    //         'email' => 'required|string|email',
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         return response()->json($validator->errors()->toJson(), 400);
-    //     }
-
-    //     $user = User::create(array_merge(
-    //         $validator->validate(),
-    //         ['password' => bcrypt($request->password)]
-    //     ));
-
-    //     return response()->json([
-    //         'message' => 'Usuario registrado',
-    //         'user' => $user
-    //     ], 200);
-    // }
 }

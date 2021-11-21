@@ -10,12 +10,14 @@ import Pagos from './components/views/Pagos.vue'
 import Profesores from './components/views/Profesores.vue'
 import Grupos from './components/views/Grupos.vue'
 import Login from './components/views/Login.vue'
+// import Preview from './components/views/Preview.vue'
 
 // Perosnal views
 import Padre from './components/Padre.vue'
 import Alumno from './components/Alumno.vue'
 import Profesor from './components/Profesor.vue'
 import Grupo from './components/Grupo.vue'
+import { isLoggedIn } from './utils/auth'
 
 Vue.use(VueRouter);
 
@@ -23,54 +25,104 @@ const router = new VueRouter({
     routes: [
         {
             path: "/",
-            component: Home
+            component: Home,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/matriculas",
-            component: Matriculas
+            component: Matriculas,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/padres",
-            component: Padres
+            component: Padres,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/alumnos",
-            component: Alumnos
+            component: Alumnos,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/pagos",
-            component: Pagos
+            component: Pagos,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/profesores",
-            component: Profesores
+            component: Profesores,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/grupos",
-            component: Grupos
+            component: Grupos,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
-            path: "/padre/:id", 
-            component: Padre
+            path: "/padre/:id",
+            component: Padre,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/alumno/:id",
-            component: Alumno
+            component: Alumno,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/profesores/:id",
-            component: Profesor
+            component: Profesor,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: "/grupo/:id",
-            component: Grupo
+            component: Grupo,
+            meta: {
+                allowAnonymous: false
+            }
         },
         {
             path: '/login',
-            component: Login
-        }
-
+            component: Login,
+            meta: {
+                allowAnonymous: true
+            }
+        },
     ]
+});
 
+router.beforeEach((to, from, next) => {
+    if (to.name == 'login' && isLoggedIn()) {
+        next({ path: '/' })
+    }
+    else if (!to.meta.allowAnonymous && !isLoggedIn()) {
+        next({
+            path: '/login',
+            query: { redirect: to.fullPath }
+        })
+    }
+    else {
+        next()
+    }
 })
+
 export default router

@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.9.2",
+    "@websanova/vue-auth": "^4.1.6",
+    "es6-promise": "^4.2.8",
     "jwt-decode": "^3.1.2",
     "roboto-fontface": "*",
     "vee-validate": "^4.4.7",
-    "vue-axios": "^3.2.4",
+    "vue-axios": "^3.4.0",
     "vue-html2pdf": "^1.8.0",
     "vue-router": "^3.5.1",
     "vuelidate": "^0.7.6",

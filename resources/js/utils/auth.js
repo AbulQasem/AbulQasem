@@ -1,7 +1,7 @@
 import decode from 'jwt-decode'
 import axios from 'axios'
 
-const REST_ENDPOINT = 'http://127.0.0.1:8000/'
+const REST_ENDPOINT = 'http://abulqasem.com'
 const AUTH_TOKEN_KEY = 'authToken'
 
 export function loginUser(email, password) {

@@ -30,9 +30,7 @@
                         mdi-pencil
                     </v-icon>
 
-                    <v-icon small @click="goToFile(item)">
-                        mdi-eye
-                    </v-icon>
+                    <v-icon small @click="goToFile(item)"> mdi-eye </v-icon>
 
                     <v-icon small @click="deleteItem(item)">
                         mdi-delete
@@ -162,6 +160,30 @@
                                 ></v-text-field>
                             </v-col>
                         </v-row>
+
+                        <v-row>
+                            <v-col cols="12" md="6">
+                                <v-text-field
+                                    id="Matricula"
+                                    name="Matricula"
+                                    placeholder="Matricula"
+                                    label="Matricula"
+                                    v-model="editedItem.Matricula"
+                                ></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" md="6">
+                                <v-text-field
+                                    id="Descuento"
+                                    name="Descuento"
+                                    placeholder="Descuento"
+                                    label="Descuento"
+                                    v-model="editedItem.Descuento"
+                                ></v-text-field>
+                            </v-col>
+
+                
+                        </v-row>
                     </v-container>
                 </v-card-text>
 
@@ -208,7 +230,7 @@ export default {
             dialogDelete: false,
             search: "",
             data: {
-                padres: []
+                padres: [],
             },
             editedIndex: -1,
             editedItem: {},
@@ -223,8 +245,8 @@ export default {
                 { text: "Matricula", value: "Matricula" },
                 { text: "Descuento", value: "Descuento" },
                 { text: "Pagado", value: "pagado" },
-                { text: "Actions", value: "actions", sortable: false }
-            ]
+                { text: "Actions", value: "actions", sortable: false },
+            ],
         };
     },
     methods: {
@@ -236,7 +258,7 @@ export default {
             else return "green";
         },
         getPadres() {
-            axios.get("api/padres").then(response => {
+            axios.get("api/padres").then((response) => {
                 this.data.padres = response.data.data.padres;
             });
         },
@@ -257,12 +279,12 @@ export default {
         deleteItemConfirm() {
             axios
                 .delete("api/padres/" + this.editedItem.id)
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200) {
                         this.getPadres();
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log("ERROR");
                 })
                 .finally(() => {
@@ -283,20 +305,20 @@ export default {
         submitForm() {
             axios
                 .put("api/padres/" + this.editedItem.id, this.editedItem)
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200) {
                         this.getPadres();
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(this.$data);
                 })
                 .finally(() => {});
-        }
+        },
     },
     created() {
         this.getPadres();
-    }
+    },
 };
 </script>
 
@@ -309,5 +331,4 @@ export default {
 .arabic-text {
     font-family: "arabic-text";
 }
-
 </style>

@@ -6,11 +6,9 @@
             <v-toolbar flat color="primary" dark>
                 <v-toolbar-title>Ficha Padre</v-toolbar-title>
             </v-toolbar>
-            <v-tabs  vertical>
+            <v-tabs vertical>
                 <v-tab>
-                    <v-icon left>
-                        mdi-account
-                    </v-icon>
+                    <v-icon left> mdi-account </v-icon>
                     Datos padre
                 </v-tab>
                 <v-tab>
@@ -63,9 +61,7 @@
                                                 outlined
                                                 @click="goToWhatsApp"
                                             >
-                                                <v-icon>
-                                                    mdi-whatsapp
-                                                </v-icon>
+                                                <v-icon> mdi-whatsapp </v-icon>
                                             </v-btn>
                                         </v-list-item-title>
 
@@ -126,10 +122,10 @@
                                         <v-list-item-subtitle>
                                             {{
                                                 padre.address +
-                                                    ", " +
-                                                    padre.postalcode +
-                                                    ", " +
-                                                    padre.city
+                                                ", " +
+                                                padre.postalcode +
+                                                ", " +
+                                                padre.city
                                             }}
                                         </v-list-item-subtitle>
                                     </v-list-item-content>
@@ -189,9 +185,9 @@
                                             >
                                             {{
                                                 " - " +
-                                                    hijo.dia +
-                                                    " - " +
-                                                    hijo.horario
+                                                hijo.dia +
+                                                " - " +
+                                                hijo.horario
                                             }}
                                         </v-list-item-subtitle>
                                     </v-list-item-content>
@@ -216,7 +212,7 @@
                                     <v-list-item-content>
                                         {{
                                             "Fecha:   " +
-                                                dateFormat(pago.created_at)
+                                            dateFormat(pago.created_at)
                                         }}
                                     </v-list-item-content>
                                     <v-list-item-content>
@@ -307,17 +303,19 @@ export default {
             nuevoPago: {
                 padre_id: "",
                 user_id: "",
-                cantidad: ""
-            }
+                cantidad: "",
+            },
         };
     },
     methods: {
         getPadre() {
-            axios.get("/api/padres/" + this.$route.params.id).then(response => {
-                this.padre = response.data.padre;
-                this.hijos = response.data.hijos;
-                this.pagos = response.data.pagos;
-            });
+            axios
+                .get("/api/padres/" + this.$route.params.id)
+                .then((response) => {
+                    this.padre = response.data.padre;
+                    this.hijos = response.data.hijos;
+                    this.pagos = response.data.pagos;
+                });
         },
         newPay() {
             this.dialog = true;
@@ -332,13 +330,13 @@ export default {
 
             axios
                 .post("api/pagos", this.nuevoPago)
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200) {
                         this.getPadre();
                         this.closeNewPayment();
                     }
                 })
-                .catch(error => {})
+                .catch((error) => {})
                 .finally(() => {
                     //Perform action in always
                 });
@@ -363,11 +361,11 @@ export default {
                     this.padre.telefono +
                     "&attachment=C:/Users/Ahmad/DownloadfichaPadre.pdf"
             );
-        }
+        },
     },
     created() {
         this.getPadre();
-    }
+    },
 };
 </script>
 

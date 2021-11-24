@@ -13,6 +13,7 @@
     "@popperjs/core": "^2.9.2",
     "@websanova/vue-auth": "^4.1.6",
     "es6-promise": "^4.2.8",
+    "html2pdf.js": "^0.9.1",
     "jwt-decode": "^3.1.2",
     "roboto-fontface": "*",
     "vee-validate": "^4.4.7",

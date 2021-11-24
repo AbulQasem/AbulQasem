@@ -10,7 +10,7 @@ import Pagos from './components/views/Pagos.vue'
 import Profesores from './components/views/Profesores.vue'
 import Grupos from './components/views/Grupos.vue'
 import Login from './components/views/Login.vue'
-// import Preview from './components/views/Preview.vue'
+import Preview from './components/views/Preview.vue'
 
 // Perosnal views
 import Padre from './components/Padre.vue'
@@ -105,6 +105,13 @@ const router = new VueRouter({
             component: Login,
             meta: {
                 allowAnonymous: true
+            }
+        },
+        {
+            path: '/preview',
+            component: Preview,
+            meta: {
+                allowAnonymous: false
             }
         },
     ]

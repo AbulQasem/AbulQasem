@@ -45,7 +45,7 @@ class ProfesorController extends Controller
         $profesor->dni = $request->dni;
         $profesor->email = $request->email;
         $profesor->telefono = $request->telefono;
-        $profesor->address = $request->direccion;
+        $profesor->address = $request->address;
         $profesor->city = $request->city;
         $profesor->postalcode = $request->postalcode;
         $profesor->save();

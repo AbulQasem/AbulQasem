@@ -115,9 +115,11 @@
                                         >
                                         {{
                                             "  - " +
-                                                data.item.dia +
-                                                " - " +
-                                                data.item.horario
+                                            data.item.dia +
+                                            " - " +
+                                            data.item.horario +
+                                             " - " +
+                                            data.item.name + " " + data.item.surname
                                         }}
                                     </template>
 
@@ -130,9 +132,11 @@
                                         >
                                         {{
                                             " - " +
-                                                item.dia +
-                                                " - " +
-                                                item.horario
+                                            item.dia +
+                                            " - " +
+                                            item.horario +
+                                            " - " +
+                                            item.name + " " + item.surname
                                         }}
                                     </template>
                                 </v-select>
@@ -151,7 +155,7 @@
                                     <template v-slot:activator="{ on, attrs }">
                                         <v-text-field
                                             v-model="editedItem.birthday"
-                                            label="Picker in menu"
+                                            label="Fecha de nacimiento"
                                             prepend-icon="mdi-calendar"
                                             v-bind="attrs"
                                             v-on="on"
@@ -232,18 +236,18 @@ export default {
                 { text: "Nivel", value: "nivel" },
                 { text: "Dia", value: "dia" },
                 { text: "Horario", value: "horario" },
-                { text: "Actions", value: "actions", sortable: false }
-            ]
+                { text: "Actions", value: "actions", sortable: false },
+            ],
         };
     },
     methods: {
         getAlumnos() {
-            axios.get("api/alumnos").then(response => {
+            axios.get("api/alumnos").then((response) => {
                 this.alumnos = response.data.data;
             });
         },
         getGrupos() {
-            axios.get("api/grupos").then(response => {
+            axios.get("api/grupos").then((response) => {
                 this.grupos = response.data.data;
             });
         },
@@ -262,12 +266,12 @@ export default {
         submitForm() {
             axios
                 .put("api/alumnos/" + this.editedItem.id, this.editedItem)
-                .then(response => {
+                .then((response) => {
                     if (response.status === 200) {
                         this.getAlumnos();
                     }
                 })
-                .catch(error => {
+                .catch((error) => {
                     console.log(this.$data);
                 })
                 .finally(() => {});
@@ -283,7 +287,7 @@ export default {
 
             const [month, day, year] = date.split("/");
             return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-        }
+        },
     },
     created() {
         this.getAlumnos();
@@ -292,8 +296,8 @@ export default {
     computed: {
         computedDateFormatted() {
             return this.formatDate(this.date);
-        }
-    }
+        },
+    },
 };
 </script>
 

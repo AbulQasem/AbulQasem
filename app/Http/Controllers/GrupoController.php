@@ -16,7 +16,7 @@ class GrupoController extends Controller
     public function index()
     {
         $grupos = DB::table('grupos')
-            ->join('profesores', 'grupos.profesores_id', "=", "profesores.id")
+            ->leftJoin('profesores', 'grupos.profesores_id', "=", "profesores.id")
             ->orderBy('grupos.nivel')
             ->select('grupos.*', 'profesores.name', 'profesores.surname')
             ->get();
